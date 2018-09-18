@@ -1,4 +1,4 @@
-package Java2;
+package HW1;
 
 public class Ledger {
 	private int salesMade = 0, maxSales = 0;

@@ -1,4 +1,4 @@
-package Java2;
+package HW1;
 
 public class CountPoor {
 
