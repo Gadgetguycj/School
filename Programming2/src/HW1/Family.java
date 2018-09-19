@@ -25,4 +25,5 @@ public class Family {
 				"\nSize: "+this.size;
 		
 	}
+	
 }
