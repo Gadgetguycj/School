@@ -9,7 +9,8 @@ public class SortingMethods {
 
 		// Variables
 		int[] intArray = new int[10];
-		System.out.println("Please Select a Sorting Method: \n1. Bubble Sort \n2. Insertion Sort \n3. Selection Sort");
+		System.out.println(
+				"Please Select a Sorting Method: \n1. Bubble Sort \n2. Insertion Sort \n3. Selection Sort \n4. Binary Search");
 		int sortingMethod = read.nextInt();
 
 		// Read in Integers
@@ -33,6 +34,8 @@ public class SortingMethods {
 					}
 				}
 			}
+			// Print array to check order
+			printArray(intArray);
 		}
 
 		// Insertion Sort
@@ -55,6 +58,8 @@ public class SortingMethods {
 				}
 
 			}
+			// Print array to check order
+			printArray(intArray);
 
 		}
 
@@ -79,10 +84,13 @@ public class SortingMethods {
 				startNum++;
 
 			}
+			// Print array to check order
+			printArray(intArray);
+		} else if (sortingMethod == 4) {
+			System.out.println("Please enter the number you'd like to search for: ");
+			int number = read.nextInt();
+			System.out.println(binarySearch(number, intArray));
 		}
-
-		// Print array to check order
-		printArray(intArray);
 
 	}
 
@@ -95,21 +103,27 @@ public class SortingMethods {
 
 	// List out numbers
 	public static int binarySearch(int number, int[] intArray) {
-		int pos=intArray.length, rangeStart = 0, rangeEnd = intArray.length, index=-1;
-		
-		do {
-			pos = (rangeStart + rangeEnd) / 2;
-			if(intArray[pos]==number) {
-				index=pos;
-				break;
-			} else if(rangeStart - rangeEnd <= 1) {
-				pos =-1;
-				break;
-			}
-			
-		}while(index!= -1);
-			
+		int pos = 0, range1 = 0, range2 = intArray.length, counter=22;
 
-		return pos;
+		do {
+			//Get MidPoint
+			pos = (range1 + range2) / 2;
+			
+			//Number is less than value in pos in array
+			if (number < intArray[pos]) {
+				range2 = pos;
+
+			//Number is greater than value in pos in array	
+			} else if (number > intArray[pos]) {
+				range1 = pos;
+			
+			//Number is Equal or doesn't exist
+			} else
+				break;
+
+
+		} while (intArray[pos] != number);
+
+		return pos+1;
 	}
 }
