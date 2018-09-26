@@ -50,9 +50,10 @@ public class SortingMethods {
 					tempOuter--;
 
 					// Check for Out of Bounds
-					if (tempOuter <= -1) break;
+					if (tempOuter <= -1)
+						break;
 				}
-				
+
 			}
 
 		}
@@ -61,7 +62,7 @@ public class SortingMethods {
 		else if (sortingMethod == 3) {
 			int startNum = 0, minNum = intArray[0], minNumIndex = 0;
 			while (startNum < intArray.length) {
-				minNum=2147483647;
+				minNum = 2147483647;
 				for (int index = startNum; index < intArray.length; index++) {
 					if (intArray[index] < minNum) {
 						minNum = intArray[index];
@@ -76,7 +77,7 @@ public class SortingMethods {
 				// Switch smallest number to the largest number location
 				intArray[startNum] = minNum;
 				startNum++;
-				
+
 			}
 		}
 
@@ -90,5 +91,25 @@ public class SortingMethods {
 		for (int i = 0; i <= 9; i++) {
 			System.out.println("Order: " + intArray[i]);
 		}
+	}
+
+	// List out numbers
+	public static int binarySearch(int number, int[] intArray) {
+		int pos=intArray.length, rangeStart = 0, rangeEnd = intArray.length, index=-1;
+		
+		do {
+			pos = (rangeStart + rangeEnd) / 2;
+			if(intArray[pos]==number) {
+				index=pos;
+				break;
+			} else if(rangeStart - rangeEnd <= 1) {
+				pos =-1;
+				break;
+			}
+			
+		}while(index!= -1);
+			
+
+		return pos;
 	}
 }
