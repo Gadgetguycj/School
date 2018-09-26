@@ -1,4 +1,4 @@
-package HWLAB1;
+package HWLAB2;
 
 public class Video extends CirculatingItem{
 
