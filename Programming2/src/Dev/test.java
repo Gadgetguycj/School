@@ -1,23 +1,23 @@
-package HW3;
+package Dev;
 
-public class SubstitutionCipher implements MessageEncoder{
-	private int shift;
-	
-	public SubstitutionCipher(int shift) {
-		this.shift = shift;
-	}
+public class test {
 
-	@Override
-	public String encode(String plainText) {
-		int shift=this.shift;
+	public static void main(String[] args) {
+		String plainText = "zzzzzzzzz";
+		int shift=1;
 		String sequence = "-abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 		char[] plainTextArray = plainText.toLowerCase().toCharArray();
 		char[] textArray = sequence.toCharArray();
+		System.out.println("Length: "+plainTextArray.length);
+		
+		
 		
 		for(int x=0; x<plainTextArray.length; x++) {
+			//User Input	Code Sequence 
 			plainTextArray[x] = textArray[(plainTextArray[x])-96 + shift];
 		}
-		return new String (plainTextArray);
+		String output = new String (plainTextArray);
+		System.out.println(output);
 	}
 
 }
