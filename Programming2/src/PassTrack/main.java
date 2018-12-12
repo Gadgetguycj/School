@@ -5,6 +5,7 @@
  */
 package PassTrack;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -12,17 +13,22 @@ public class main {
 
 	static Scanner r = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		boolean running=true;
 		String input;
 
 		//Teams
 		String[] nyitTeam = 
 			{"Vinny","Matt","David","Josh","Melinda"
-			,"Christian","Nelly","Frick","Leroy"
+			,"Christian","Nelly","Michael","Leroy"
 			,"John","Jan","Chase","Darren","Jordan","Chris"
-			,"Said","Beno","Alexis","Joel","Bjorn","Busta","Elan","Ravi"
-			,"Mark","Joshua","Other","eboni","runwithit"};
+			,"Said","Beno","Alexis","Joel","Bjorn","Busta","Elan","Jim"
+			,"Nick","Joshua","Other"};
+		String[] MIT = 
+			{
+				"Optimus Prime", "The Green Lantern"	
+			};
+		
 
 		method.addPlayers(nyitTeam);
 		game.loadData("src/PassTrack/db.txt");
@@ -62,13 +68,13 @@ public class main {
 				String input2="";
 				do {
 					System.out.println("\tPlease Select a Team");
-					System.out.println("\t1. NYIT");
+					System.out.println("\t1. MIT");
 					System.out.println("\t2. Exit");
 					input2 = r.nextLine();
 
 					switch(input2) {
 					case "1":
-						method.addPlayers(nyitTeam);
+						method.addPlayers(MIT);
 						input2="!";
 						break;
 					case "!":

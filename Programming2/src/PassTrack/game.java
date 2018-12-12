@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,65 +22,49 @@ public class game {
 		return dateFormat.format(date);
 	}
 
-	//Takes a single line and writes it to a file
-	public static boolean writeFile(String file, String item) {
-		boolean pass=true;
+	public static void writeFile(String file,String text) throws IOException {
+		FileOutputStream outputStream = new FileOutputStream(file);
 		try {
-			FileOutputStream outputStream = new FileOutputStream(file);
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-16");
-			BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-			bufferedWriter.write(item);
-			bufferedWriter.close();
-
-		} catch (IOException e) {
-			pass=false;
+			byte[] strToBytes = text.getBytes();
+			outputStream.write(strToBytes);
+			outputStream.close();
+		}catch(IOException e) {
 			e.printStackTrace();
-			System.out.println("Write Error");
 		}
-		return pass;
-
 	}
 
 	//Writes differences of game data to disk
-	public static void saveGame() {
-		//Import array of disk and of arraylist
-		int[][] diskData = loadDataToArray("src/PassTrack/db.txt");
-		System.out.println("\nDISKDATA");
-		method.printTwoDimIntArray(diskData);
-
-		System.out.println("\nCURRENT DATA");	
-
+	public static void saveGame() throws IOException {
+		//Import array of memory and of write to disk
 		int[][] currentData = currentDataToArray();
-		method.printTwoDimIntArray(currentData);
-		int[][] differences = new int[currentData.length][currentData[0].length];
-
-		//Find differences between the two arrays
-		for(int outer=0; outer<currentData[0].length; outer++) {
-			for(int inner=0; inner<currentData[0].length; inner++) {
-				differences[outer][inner] = (currentData[outer][inner] - diskData[outer][inner]);
-
-			}
-
-		}
-		writeFile("src/PassTrack/db.txt",getDateTime());
-		writeArray(differences);
-		System.out.println("\nDIFFERENCES");
-		method.printTwoDimIntArray(differences);
+		writeArray(currentData);
 
 	}
 
 	//Write an array to disk
-	public static void writeArray(int array[][]) {
-		for(int outer=0; outer<array.length; outer++) {
-			for(int inner=0; inner<array[0].length; inner++) {
-				String writeLine="";
-				if(array[outer][inner]!=0) {
-					writeLine = outer+" "+loadDataToStat(inner)+" "+array[outer][inner];
-					writeFile("src/PassTrack/db.txt", writeLine);
+	public static void writeArray(int array[][]) throws IOException {
+		
+		try {
+			FileOutputStream outputStream = new FileOutputStream("src/PassTrack/db.txt",true);		
+			for(int outer=0; outer<array.length; outer++) {
+				for(int inner=0; inner<array[0].length; inner++) {
+					if(array[outer][inner]!=0) {
+						String writeLine = (outer)+" "+loadDataToStat(inner)+" "+1;
+						writeLine = "\n"+writeLine;
+						byte[] strToBytes = writeLine.getBytes();
+						outputStream.write(strToBytes);
+					}
 				}
-			}
 
+			}
+			outputStream.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			
 		}
+		
+		
 	}
 
 	//Takes data in arraylist playerArray and transforms it into an array
@@ -133,12 +120,11 @@ public class game {
 
 			//Stores a map of all found stats
 			while ((line = bufferedReader.readLine()) != null) {
-				
+
 				String[] strArray = line.split(" ");
-				strArray[0].replaceAll("[^a-zA-Z0-9 ]", "");
+				//strArray[0].replaceAll("[^a-zA-Z0-9 ]", "");
 
 				if(!"$".equals(strArray[0]) && !"".equals(strArray[0])) {
-					System.out.println("strArray: "+strArray[0]);
 					int index = Integer.parseInt(strArray[0]);
 					statArray[index][loadDataSort(strArray[1])] = (Integer.parseInt(strArray[2])
 							+ statArray[index][loadDataSort(strArray[1])]);
@@ -148,9 +134,7 @@ public class game {
 			}
 
 			reader.close();
-
-		} catch (IOException
-				e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return statArray;
@@ -163,7 +147,7 @@ public class game {
 		else if(type.equals("catches"))	index=2;
 		else if(type.equals("goals"))	index=3;
 		else if(type.equals("drops"))	index=4;
-		else if(type.equals("bdthrows"))	index=5;
+		else if(type.equals("bdthrows"))index=5;
 		else if(type.equals("blocks"))	index=6;
 		else if(type.equals("assists"))	index=7;
 		return index;

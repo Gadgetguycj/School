@@ -1,6 +1,8 @@
 package PassTrack;
 
 import java.util.Scanner;
+import java.text.DecimalFormat;
+
 
 public class method {
 
@@ -72,6 +74,7 @@ public class method {
 
 	//List Players and Stats
 	public static void listStats() {
+		DecimalFormat format = new DecimalFormat(".0");
 		int count=0;
 		for(player index : player.playerArray) {
 			count++;
@@ -89,7 +92,8 @@ public class method {
 
 			}
 			//Different Stats
-			System.out.print("RankPT "+index.getRankPoint());
+			if(index.getRankPoint()==0) System.out.print("RankPT "+(index.getRankPoint()));
+			else System.out.print("RankPT "+format.format(index.getRankPoint()));
 			System.out.print("	Completions "+index.getCompletions());
 			System.out.print("	Catches "+index.getCatches());
 			System.out.print("   Goals "+index.getGoals());
